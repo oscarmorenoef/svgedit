@@ -1,9 +1,18 @@
 import { fromRollup } from '@web/dev-server-rollup'
 import rollupBabel from '@rollup/plugin-babel'
 import rollupHtml from 'rollup-plugin-html'
+import replace from '@rollup/plugin-replace';
+import dotenv from 'dotenv';
 
 const html = fromRollup(rollupHtml)
 const babel = fromRollup(rollupBabel)
+
+dotenv.config();
+
+const replacePlugin = fromRollup(replace)({
+  preventAssignment: true,
+  'process.env.UXMAL_API_URL': JSON.stringify(process.env.UXMAL_API_URL),
+});
 
 export default {
   mimeTypes: {
@@ -14,6 +23,7 @@ export default {
     'src/editor/extensions/*/*.html': 'js'
   },
   plugins: [
+    replacePlugin,
     html({
       include: [
         'src/editor/panels/*.html',
