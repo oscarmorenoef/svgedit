@@ -87,7 +87,7 @@ async function uploadSvg(request) {
   });
 
   try{ 
-    await fetch(`${envSvgUrl()}/123`, {
+    await fetch(`${envSvgUrl()}/${svgId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
